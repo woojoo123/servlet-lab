@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.repo.PostStore;
+
 
 @WebServlet("/posts")
 public class PostServlet extends HttpServlet {
@@ -17,14 +19,20 @@ public class PostServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType("text/plain; charset=UTF-8");
-        resp.getWriter().println("posts endpoint is alive");
+
+        List<String> items = PostStore.findAll();
+
+        resp.getWriter().println("POSTS COUNT: " + items.size());
+        for (int i = 0; i < items.size(); i++) {
+            resp.getWriter().println((i + 1) + ") " + items.get(i));
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         // 파라미터 읽기 전에 인코딩 설정
-        req.setCharacterEncoding("UTF-8");
+        // req.setCharacterEncoding("UTF-8");  // Filter에서 처리하므로 주석처리
 
         String title = req.getParameter("title");
         String content = req.getParameter("content");
@@ -37,12 +45,13 @@ public class PostServlet extends HttpServlet {
             return;
         }
 
+        PostStore.add(title.trim(), content.trim());
+
         // 정상 처리 : 201
         resp.setStatus(HttpServletResponse.SC_CREATED);
         resp.setContentType("text/plain; charset=UTF-8");
-
         resp.getWriter().println("CREATED");
-        resp.getWriter().println("title=" + title);
-        resp.getWriter().println("content=" + content);
+        // resp.getWriter().println("title=" + title);
+        // resp.getWriter().println("content=" + content);
         }
     }
