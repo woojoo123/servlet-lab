@@ -1,0 +1,25 @@
+### Health Check
+GET http://localhost:8080/hello-servlet/health
+
+### Get Posts Count
+GET http://localhost:8080/hello-servlet/posts
+
+### Create Post 1
+POST http://localhost:8080/hello-servlet/posts
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+
+title=글1&content=내용2
+
+### Create Post 2
+POST http://localhost:8080/hello-servlet/posts
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+
+title=글2&content=내용2
+
+### Create Post 3
+POST http://localhost:8080/hello-servlet/posts
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+
+title=글3&content=내용3
+
+### Get Posts Count
