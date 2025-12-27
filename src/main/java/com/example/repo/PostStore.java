@@ -18,7 +18,9 @@ public class PostStore {
     //     return new ArrayList<>(posts);
     // }
 
+    // AtomicLong : 동시성 증가해도 ID가 꼬이지 않음
     private static final AtomicLong seq = new AtomicLong(0);
+    // CopyOnWriteArrayList : 동시에 add/조회가 발생해도 안전
     private static final CopyOnWriteArrayList<Post> posts = new CopyOnWriteArrayList<>();
 
     public static Post add(String title, String content) {
