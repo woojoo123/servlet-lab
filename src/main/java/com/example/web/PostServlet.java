@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.common.ApiException;
+import com.example.common.JsonResponse;
 import com.example.domain.Post;
 import com.example.repo.PostStore;
 import com.google.gson.Gson;
@@ -29,9 +31,7 @@ public class PostServlet extends HttpServlet {
         body.put("count", items.size());
         body.put("items", items);
 
-        resp.setStatus(HttpServletResponse.SC_OK);
-        resp.setContentType("application/json; charset=UTF-8");
-        resp.getWriter().println(gson.toJson(body));
+        JsonResponse.ok(resp, body);
     }
 
     @Override
@@ -45,22 +45,22 @@ public class PostServlet extends HttpServlet {
 
         // 둘 중 하나라도 없거나 비면 400
         if(title == null || title.trim().isEmpty() || content == null || content.trim().isEmpty()) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            resp.setContentType("text/plain; charset=UTF-8");
+            // resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            // resp.setContentType("text/plain; charset=UTF-8");
 
-            Map<String, String> err = new HashMap<>();
-            err.put("message", "title and content are required");
-            resp.getWriter().println(gson.toJson(err));
-            return;
+            // Map<String, String> err = new HashMap<>();
+            // err.put("message", "title and content are required");
+            // resp.getWriter().println(gson.toJson(err));
+            // return;
+            throw new ApiException(400, "BAD_REQUEST", "title and content are required");
         }
 
         Post saved = PostStore.add(title.trim(), content.trim());
+        JsonResponse.created(resp, saved);
 
         // 정상 처리 : 201
-        resp.setStatus(HttpServletResponse.SC_CREATED);
-        resp.setContentType("application/json; charset=UTF-8");
-        resp.getWriter().println(gson.toJson(saved));
-        // resp.getWriter().println("title=" + title);
-        // resp.getWriter().println("content=" + content);
+        // resp.setStatus(HttpServletResponse.SC_CREATED);
+        // resp.setContentType("application/json; charset=UTF-8");
+        // resp.getWriter().println(gson.toJson(saved));
         }
     }

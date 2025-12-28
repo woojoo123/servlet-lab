@@ -1,3 +1,5 @@
+package com.example.web;
+
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -10,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.example.common.ApiException;
 import com.example.common.JsonResponse;
+import javax.servlet.annotation.WebFilter;
 
+@WebFilter("/*")
 public class ExceptionHandlingFilter implements Filter {
     
     @Override
