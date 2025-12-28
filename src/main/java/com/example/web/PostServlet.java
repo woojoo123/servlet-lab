@@ -15,14 +15,11 @@ import com.example.common.ApiException;
 import com.example.common.JsonResponse;
 import com.example.domain.Post;
 import com.example.repo.PostStore;
-import com.google.gson.Gson;
 
 
 @WebServlet("/posts")
 public class PostServlet extends HttpServlet {
-    
-    private final Gson gson = new Gson();
-    
+        
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Post> items = PostStore.findAll();
