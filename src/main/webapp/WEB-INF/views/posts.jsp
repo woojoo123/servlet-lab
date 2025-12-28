@@ -12,6 +12,10 @@
 
   <p>
     <a href="<%= request.getContextPath() %>/posts/new">새 글 작성</a>
+    |
+    <form method="post" action="<%= request.getContextPath() %>/logout" style="display: inline;">
+      <button type="submit">로그아웃</button>
+    </form>
   </p>
 
   <%
