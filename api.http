@@ -22,4 +22,8 @@ Content-Type: application/x-www-form-urlencoded; charset=UTF-8
 
 title=글3&content=내용3
 
-### Get Posts Count
+### Error
+POST http://localhost:8080/hello-servlet/posts
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+
+title=글3&content=
