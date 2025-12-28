@@ -1,8 +1,14 @@
 package com.example.web;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * 로그인 처리 서블릿
@@ -23,6 +29,18 @@ public class LoginServlet extends HttpServlet {
      * 3. 실패 시: 로그인 페이지로 리다이렉트 (에러 메시지 + next 정보 유지)
      * 4. 성공 시: 세션에 사용자 정보 저장 후 원래 가려던 페이지로 리다이렉트
      */
+
+    // GET /login -> JSP forward
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/login.jsp");
+        try {
+            rd.forward(req, resp);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // 폼에서 전송된 파라미터 읽기
