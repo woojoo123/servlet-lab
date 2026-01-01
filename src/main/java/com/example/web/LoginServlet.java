@@ -19,6 +19,7 @@ public class LoginServlet extends HttpServlet {
 
     /** 세션에 저장할 로그인 사용자 정보의 키 */
     public static final String SESSION_KEY = "LOGIN_USER";
+    public static final String ROLE_KEY = "LOGIN_ROLE";
 
     /**
      * POST /login -> 로그인 처리 후 redirect
@@ -71,6 +72,9 @@ public class LoginServlet extends HttpServlet {
         
         // 세션에 사용자명 저장 (다른 페이지에서 로그인 여부 확인용)
         session.setAttribute(SESSION_KEY, username);
+
+        String role = "admin".equals(username) ? "ADMIN" : "USER";
+        session.setAttribute(ROLE_KEY, role);
 
         // Open Redirect 공격 방지: next는 /로 시작하는 내부 경로만 허용
         // 외부 URL(예: http://악성사이트.com)로 리다이렉트하는 것을 방지
